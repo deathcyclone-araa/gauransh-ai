@@ -61,6 +61,10 @@ app.post("/chat", async (req, res) => {
 
 });
 
+app.get("/", (req, res) => {
+  res.send("AI Server Running Successfully 🚀");
+});
+
 app.listen(3000, () => {
     console.log("AI Server Running on port 3000");
 });
