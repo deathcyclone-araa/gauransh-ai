@@ -138,10 +138,13 @@
         placeholder="Type message..."
       >
 
-      <button onclick="sendMessage()">
-        Send
-      </button>
+  <button onclick="sendMessage()">
+  Send
+</button>
 
+<button onclick="startVoice()">
+  🎤
+</button>
     </div>
 
   </div>
@@ -224,6 +227,7 @@
             Server error
           </div>
         `;
+speakText(data.reply || data.error);
 
       }
 
@@ -242,6 +246,46 @@
         }
       );
 
+function speakText(text){
+
+  const speech = new SpeechSynthesisUtterance();
+
+  speech.text = text;
+
+  speech.lang = "en-IN";
+
+  speech.rate = 1;
+
+  window.speechSynthesis.speak(speech);
+
+}
+
+function startVoice(){
+
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  const recognition =
+    new SpeechRecognition();
+
+  recognition.lang = "en-IN";
+
+  recognition.start();
+
+  recognition.onresult = function(event){
+
+    const voiceText =
+      event.results[0][0].transcript;
+
+    document.getElementById("message").value =
+      voiceText;
+
+    sendMessage();
+
+  };
+
+}
   </script>
 
 </body>
